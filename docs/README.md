@@ -11,6 +11,8 @@ Estado: definición de producto. Estas guías explican lo acordado, las propuest
 - [Roadmap](roadmap.md)
 - [Calidad documental y guías por construir](documentation.md)
 - [Referencias de diseño](design-references.md)
+- [Dirección visual v3 pendiente de consenso](design-direction.md)
+- [Q2: imágenes, voz, Swift y sticky notes](q2.md)
 
 ## Se entrega con cada bloque funcional
 

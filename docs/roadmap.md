@@ -1,6 +1,6 @@
 # Roadmap
 
-Estado inicial: B0 en definición; repositorio y contribución pública inicializados como base documental. No hay backend ni app instalable.
+Estado: B0 en revisión de diseño. La dirección v3 está definida; el prototipo se itera hasta alcanzar consenso. El runtime de B1 espera esa revisión. Repositorio y contribución pública inicializados como base documental.
 
 | Bloque | Entregable |
 | --- | --- |
@@ -19,3 +19,7 @@ Estado inicial: B0 en definición; repositorio y contribución pública iniciali
 | B12 | Primera versión funcional pública y guías validadas |
 
 La documentación se desarrolla y comprueba durante cada bloque. B12 consolida y valida el material; no es la primera vez que se escribe. Cada PR explica lo comprobado y actualiza las guías afectadas.
+
+## Q2 · Posterior a v0.1
+
+Imágenes, notas de voz en R2, SwiftUI y sticky notes de escritorio integradas con la web. Ver [alcance de Q2](q2.md). No implica un trimestre calendario ni cambia el alcance actual de B1.

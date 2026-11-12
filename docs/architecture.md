@@ -37,3 +37,7 @@ Esto describe el diseño elegido para Taski, no una limitación del protocolo. C
 Dominio y casos de uso independientes de React, MCP y D1. Los adaptadores HTTP/MCP llaman al mismo núcleo. Un adaptador de almacenamiento implementa la persistencia y la UI consume la API. Miembros, áreas, textos, logo, colores y dominio pertenecen a configuración/presentación.
 
 Otra instalación tendrá otro Worker, otra base y otra configuración. Otro almacenamiento o runtime requiere implementar su adaptador: no se ofrece todavía como una opción funcional.
+
+## Q2: archivos y clientes adicionales
+
+R2 guardará imágenes/audio; D1 guardará referencias, texto y relaciones de notas/tareas. La app Swift y las sticky notes consumirán la misma API que la web. El bucket no sustituye la base ni la sincronización. Ver [Q2](q2.md).
