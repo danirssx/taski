@@ -4,6 +4,8 @@ Un gestor de tareas e ideas para equipos pequeños, con API y MCP como interface
 
 **Estado: definición de producto y documentación inicial.** Todavía no hay aplicación instalable, backend, servidor MCP ni despliegue de producción. El diseño de la UI está en exploración.
 
+La [revisión visual v3](docs/design-direction.md) explora captura inline, detalle lateral y una vista móvil centrada en feedback. Se revisará hasta alcanzar consenso antes de desarrollar el runtime de B1.
+
 ## Dirección del proyecto
 
 - Un proyecto por instalación, con sus propios datos y configuración.
@@ -43,6 +45,8 @@ Este comando verifica enlaces locales de documentación; no arranca una aplicaci
 - [Roadmap por bloques](docs/roadmap.md)
 - [Criterios de calidad documental](docs/documentation.md)
 - [Referencias para explorar el diseño](docs/design-references.md)
+- [Dirección visual actual](docs/design-direction.md)
+- [Q2: imágenes, voz, SwiftUI y sticky notes](docs/q2.md)
 
 ## Licencia
 
