@@ -1,0 +1,17 @@
+# Documentación de Taski
+
+Estado: definición de producto. Estas guías explican lo acordado, las propuestas y cómo colaborar; todavía no hay instrucciones de instalación de una aplicación funcional.
+
+## Disponible ahora
+
+- [Inicio y verificación local](../README.md)
+- [Contribuir por fork y PR](../CONTRIBUTING.md)
+- [Alcance del producto](product-scope.md)
+- [Arquitectura y dataflow propuestos](architecture.md)
+- [Roadmap](roadmap.md)
+- [Calidad documental y guías por construir](documentation.md)
+- [Referencias de diseño](design-references.md)
+
+## Se entrega con cada bloque funcional
+
+Instalación local de la app, referencia de configuración, API/OpenAPI, configuración de Claude Code/Codex, despliegue Cloudflare, otra instalación independiente, rebranding, UI alternativa, actualización de versión y recuperación de datos. Sus instrucciones se probarán contra la implementación antes de presentarlas como disponibles.

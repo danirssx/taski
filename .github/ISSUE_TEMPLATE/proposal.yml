@@ -1,0 +1,21 @@
+name: Proponer una mejora
+description: Una idea de producto, diseño, arquitectura o documentación.
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Qué problema quieres resolver
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Propuesta
+      description: Describe un recorrido o ejemplo; añade referencias si ayudan.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Alcance y comprobación
+      description: Qué incluye y cómo sabríamos que funciona.

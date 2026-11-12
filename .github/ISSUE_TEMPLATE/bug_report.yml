@@ -1,0 +1,22 @@
+name: Reportar un problema
+description: Un comportamiento o contenido que no funciona como se describe.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Qué ocurre
+      description: Indica también qué esperabas que ocurriera.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Cómo reproducirlo
+      description: Pasos, versión o commit y entorno. Usa datos ficticios.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidencia
+      description: Capturas o mensajes relevantes, sin secretos ni datos del equipo.
