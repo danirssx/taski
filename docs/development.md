@@ -19,10 +19,11 @@ Node 24.11.1 (fijado en `.nvmrc`) y npm 11. También se admite Node 26 desde 26.
 
 ```sh
 npm ci
+npm run db:migrate
 npm run dev
 ```
 
-Wrangler muestra el servidor local en `http://127.0.0.1:8787`. En este primer esqueleto `GET /health` devuelve `{"service":"taski","status":"ok"}` como señal de proceso vivo. D1 y su comprobación de disponibilidad se incorporan en B1-02. No hay tareas, acceso de equipo, UI o MCP todavía. Detener con Ctrl+C.
+Wrangler muestra el servidor local en `http://127.0.0.1:8787`. `GET /health` verifica una lectura real del bootstrap D1: HTTP 200 si está preparado y 503 en caso contrario. Consulta el [arranque local](getting-started.md) para respuesta esperada, persistencia y configuración de ejemplo. No hay tareas, acceso de equipo, UI o MCP todavía. Detener con Ctrl+C.
 
 ## Comprobaciones
 
@@ -32,6 +33,6 @@ npm run docs:check
 git diff --check
 ```
 
-`check` ejecuta tipos, fronteras y bundle. `typecheck` verifica el núcleo sin tipos de DOM/Cloudflare; `check:boundaries` inspecciona imports estáticos, exports e imports dinámicos literales. Es una regla de arquitectura, no un sandbox de seguridad. `build` usa `wrangler deploy --dry-run` para generar `dist` sin desplegar ni requerir credenciales. `dev` usa modo local, sin `--remote`.
+`check` ejecuta tipos, fronteras, pruebas y bundle. `typecheck` verifica el núcleo sin tipos de DOM/Cloudflare; `check:boundaries` inspecciona imports estáticos, exports e imports dinámicos literales. Es una regla de arquitectura, no un sandbox de seguridad. `npm test` prueba fallos de disponibilidad y Worker/D1 reales emulados mediante el harness de Wrangler, con almacenamiento efímero aislado. `build` usa `wrangler deploy --dry-run` para generar `dist` sin desplegar ni requerir credenciales. `dev` y los scripts de D1 usan modo local, sin `--remote`.
 
 CI ejecuta estas comprobaciones en PRs, incluidos forks, sin secretos de instalación o Cloudflare. La documentación y el spike de B0 conservan su workflow independiente. No se añade un comando de despliegue remoto hasta B11.
