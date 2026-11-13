@@ -1,0 +1,382 @@
+[
+  {
+    "key": "DEMO-001",
+    "title": "Revisar navegación",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-a",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-1-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-002",
+    "title": "Corregir contraste",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-b",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-2-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-003",
+    "title": "Simplificar formulario",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "in_progress",
+    "assigneeId": "dev-a",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-3-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-004",
+    "title": "Documentar instalación",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-b",
+    "area": "general",
+    "type": "feedback",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-4-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-005",
+    "title": "Ajustar espaciado",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-a",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-5-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-006",
+    "title": "Revisar estados",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "in_progress",
+    "assigneeId": "dev-b",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-6-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-007",
+    "title": "Validar enlaces",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-a",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-7-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-008",
+    "title": "Editar descripción",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-b",
+    "area": "general",
+    "type": "feedback",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-8-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-009",
+    "title": "Ordenar resultados",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "in_progress",
+    "assigneeId": "dev-a",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-9-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-010",
+    "title": "Verificar teclado",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-b",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-10-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-011",
+    "title": "Mejorar mensajes",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-a",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-11-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-012",
+    "title": "Reducir campos",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "in_progress",
+    "assigneeId": "dev-b",
+    "area": "general",
+    "type": "feedback",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-12-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-013",
+    "title": "Revisar paginación",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-a",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-13-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-014",
+    "title": "Documentar errores",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-b",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-14-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-015",
+    "title": "Ajustar tipografía",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "in_progress",
+    "assigneeId": "dev-a",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-15-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-016",
+    "title": "Probar conversión",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-b",
+    "area": "general",
+    "type": "feedback",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-16-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-017",
+    "title": "Revisar filtros",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-a",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-17-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-018",
+    "title": "Verificar historial",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "in_progress",
+    "assigneeId": "dev-b",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-18-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-019",
+    "title": "Preparar ejemplos",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-a",
+    "area": "general",
+    "type": "task",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-19-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  },
+  {
+    "key": "DEMO-020",
+    "title": "Comprobar restauración",
+    "description": "Contexto ficticio para comprobar la vista completa. Criterio: conservar el contenido y registrar los cambios.",
+    "status": "todo",
+    "assigneeId": "dev-b",
+    "area": "general",
+    "type": "feedback",
+    "highlighted": false,
+    "version": 1,
+    "prUrl": null,
+    "comments": [
+      {
+        "id": "comment-20-1",
+        "body": "Ejemplo ficticio de avance.",
+        "actorId": "dev-b"
+      }
+    ]
+  }
+]

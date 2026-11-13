@@ -1,0 +1,32 @@
+{
+  "id": "demo",
+  "name": "Demo project",
+  "prefix": "DEMO",
+  "configVersion": 1,
+  "baseUrl": "https://taski.example",
+  "agentsCanComplete": false,
+  "members": [
+    {
+      "id": "dev-a",
+      "name": "Alex"
+    },
+    {
+      "id": "dev-b",
+      "name": "Sam"
+    },
+    {
+      "id": "reviewer",
+      "name": "Taylor"
+    }
+  ],
+  "areas": [
+    "general",
+    "web"
+  ],
+  "statuses": [
+    "todo",
+    "in_progress",
+    "in_review",
+    "done"
+  ]
+}
