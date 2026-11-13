@@ -2,6 +2,8 @@
 
 Estado: B0 completado. B1 ya tiene TypeScript, CI y [Worker/D1 locales](getting-started.md); conserva pendiente la revisión independiente de onboarding de [B1-03](verification/b1-onboarding.md). B2 continúa con configuración y sistema visual. Ver [decisiones y criterios de entrega](decisions/b0.md), [issues](https://github.com/danirssx/taski/issues) y [milestones](https://github.com/danirssx/taski/milestones).
 
+B2 añade [presets validados](configuration.md) y [componentes/temas](ui.md) con una vista de datos ficticios. B3 continúa con el núcleo persistente de tickets; B1-03 mantiene su comprobación humana independiente.
+
 | Bloque | Entregable |
 | --- | --- |
 | B0 | Recorridos, alcance, reglas y dirección visual |

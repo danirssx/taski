@@ -60,6 +60,6 @@ npm run docs:check
 git diff --check
 ```
 
-`check` ejecuta tipos, fronteras, seis pruebas y bundle local. Las pruebas de integración usan el [test harness oficial de Wrangler](https://developers.cloudflare.com/workers/testing/test-harness/get-started/), ejecutan el Worker y las migraciones sobre D1 emulado en almacenamiento temporal aislado; no tocan tu base de desarrollo. Comprueban falta de migración, reaplicación, lectura/alteración real y recuperación. No requieren secretos.
+`check` ejecuta tipos, fronteras, pruebas de configuración/runtime y bundles locales. Las pruebas de integración usan el [test harness oficial de Wrangler](https://developers.cloudflare.com/workers/testing/test-harness/get-started/), ejecutan el Worker y las migraciones sobre D1 emulado en almacenamiento temporal aislado; no tocan tu base de desarrollo. Comprueban falta de migración, reaplicación, lectura/alteración real y recuperación. No requieren secretos.
 
 Los checks documentales validan enlaces y aritmética de B0. Si modificas el spike Python, ejecuta también [sus instrucciones](../experiments/b0/README.md). Consulta [desarrollo](development.md) para estructura, dependencias y CI, o [solución de problemas](troubleshooting.md) si algún paso falla.

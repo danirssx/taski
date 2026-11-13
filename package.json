@@ -11,19 +11,31 @@
   "packageManager": "npm@11.16.0",
   "scripts": {
     "dev": "wrangler dev --local",
-    "build": "wrangler deploy --dry-run --outdir dist",
+    "build": "npm run build:web && npm run build:worker",
     "db:migrate": "wrangler d1 migrations apply DB --local",
     "db:check": "wrangler d1 execute DB --local --command \"SELECT bootstrap_version FROM taski_bootstrap WHERE id = 1\"",
     "test": "node --test tests/*.test.mjs",
     "onboarding:check": "node scripts/verify-onboarding.mjs",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.core.json",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.core.json && tsc --noEmit -p tsconfig.web.json",
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "check": "npm run typecheck && npm run check:boundaries && npm test && npm run build",
-    "docs:check": "python3 scripts/check_docs.py && python3 scripts/check_linear_baseline.py"
+    "docs:check": "python3 scripts/check_docs.py && python3 scripts/check_linear_baseline.py",
+    "ui": "vite --config vite.config.mjs",
+    "build:web": "vite build --config vite.config.mjs",
+    "build:worker": "wrangler deploy --dry-run --outdir dist/worker",
+    "test:ui": "playwright test"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "5.20261113.1",
+    "@playwright/test": "1.65.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "typescript": "6.0.3",
+    "vite": "8.3.8",
     "wrangler": "4.161.0"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   }
 }

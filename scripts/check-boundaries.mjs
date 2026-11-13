@@ -11,7 +11,7 @@ const allowed = {
   adapters: ["domain", "application", "adapters", "config"],
   config: ["config"],
   client: ["client"],
-  web: ["web", "client"],
+  web: ["web", "client", "config"],
 };
 
 async function check(directory) {
@@ -39,7 +39,10 @@ async function check(directory) {
           const relative = path.relative(root, path.resolve(path.dirname(filename), target));
           const to = relative.split(path.sep)[0];
           assert(allowed[from]?.includes(to), `Forbidden boundary: ${from} -> ${target} in ${filename}`);
-        } else if (["domain", "application"].includes(from)) {
+          if (from === "web" && to === "config") {
+            assert(path.relative(root, filename).startsWith(`web${path.sep}preview${path.sep}`), `Only the preview composition root may import configuration: ${filename}`);
+          }
+        } else if (["domain", "application", "config"].includes(from)) {
           assert.fail(`Core must not depend on platform or packages: ${filename} -> ${target}`);
         } else if (["client", "web"].includes(from)) {
           assert(!/^(cloudflare:|node:|@cloudflare\/|wrangler$)/.test(target), `Platform dependency in ${from}: ${target}`);
