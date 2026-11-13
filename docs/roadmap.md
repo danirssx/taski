@@ -1,6 +1,6 @@
 # Roadmap
 
-Estado: B0 completado con diseño aceptado, reglas, [auditoría saneada](benchmarks/linear-baseline.md) y [spike reproducible](../experiments/b0/README.md). B1 puede iniciar la base TypeScript/Worker/D1. Ver [decisiones y criterios de entrega](decisions/b0.md), [issues](https://github.com/danirssx/taski/issues) y [milestones](https://github.com/danirssx/taski/milestones).
+Estado: B0 completado. B1 ya tiene TypeScript, CI y [Worker/D1 locales](getting-started.md); conserva pendiente la revisión independiente de onboarding de [B1-03](verification/b1-onboarding.md). B2 continúa con configuración y sistema visual. Ver [decisiones y criterios de entrega](decisions/b0.md), [issues](https://github.com/danirssx/taski/issues) y [milestones](https://github.com/danirssx/taski/milestones).
 
 | Bloque | Entregable |
 | --- | --- |

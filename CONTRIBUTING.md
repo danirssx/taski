@@ -31,6 +31,8 @@ git diff --check
 
 Para código TypeScript o configuración del Worker, instala con `npm ci` y ejecuta `npm run check`. Incluye el lockfile si cambia una dependencia. Mantén dominio/aplicación libres de React y Cloudflare. Los comandos y las fronteras están en [desarrollo](docs/development.md).
 
+Si cambias el onboarding, migra el arranque o modificas sus comandos, ejecuta también `npm run onboarding:check` desde un checkout limpio con los cambios commiteados. Reproduce la instalación en un clon temporal y registra el resultado real; no sustituye una revisión humana independiente cuando el issue la requiere. Ver [evidencia y recorrido de B1](docs/verification/b1-onboarding.md).
+
 4. Revisa y publica tu rama en tu fork:
 
 ```sh
