@@ -14,7 +14,8 @@ def main() -> int:
     root = Path(__file__).resolve().parents[1]
     errors = []
     checked = 0
-    documents = sorted(path for path in root.rglob("*.md") if ".git" not in path.parts)
+    excluded = {".git", ".venv", "node_modules"}
+    documents = sorted(path for path in root.rglob("*.md") if not excluded.intersection(path.parts))
     for document in documents:
         text = document.read_text(encoding="utf-8")
         text = re.sub(r"^```.*?^```\s*$", "", text, flags=re.MULTILINE | re.DOTALL)

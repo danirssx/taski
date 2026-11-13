@@ -1,0 +1,49 @@
+{
+  "status": "LOCAL_CONTRACT_SPIKE",
+  "tokenizer": "tiktoken==0.14.0/o200k_base",
+  "serialization": "json.dumps ensure_ascii=False sort_keys=True separators=(',', ':')",
+  "scope": "Synthetic in-process fixtures; no host, transport, D1, model usage or latency measured",
+  "tools": 8,
+  "metrics": {
+    "catalog": {
+      "tokensProxy": 1736,
+      "utf8Bytes": 7059
+    },
+    "list20": {
+      "tokensProxy": 710,
+      "utf8Bytes": 2487
+    },
+    "ordinaryReceipt": {
+      "tokensProxy": 41,
+      "utf8Bytes": 125
+    },
+    "projectFull": {
+      "tokensProxy": 107,
+      "utf8Bytes": 389
+    },
+    "projectNotModified": {
+      "tokensProxy": 20,
+      "utf8Bytes": 66
+    },
+    "workRead": {
+      "tokensProxy": 113,
+      "utf8Bytes": 435
+    },
+    "singleChange": {
+      "tokensProxy": 89,
+      "utf8Bytes": 287
+    }
+  },
+  "budgetsProxy": {
+    "catalog": 4000,
+    "list20": 1600,
+    "ordinaryReceipt": 200
+  },
+  "plannedOperations": {
+    "ticketAndRecentComments": 1,
+    "statusAndProgressAtomic": 1
+  },
+  "realUsage": null,
+  "latency": null,
+  "superiorityOverLinear": "NOT_DEMONSTRATED"
+}

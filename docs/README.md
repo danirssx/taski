@@ -1,6 +1,6 @@
 # Documentación de Taski
 
-Estado: definición de producto. Estas guías explican lo acordado, las propuestas y cómo colaborar; todavía no hay instrucciones de instalación de una aplicación funcional.
+Estado: B0 completado. Estas guías explican lo acordado, la auditoría y el spike local; todavía no hay instrucciones de instalación de una aplicación funcional.
 
 ## Disponible ahora
 
@@ -14,6 +14,9 @@ Estado: definición de producto. Estas guías explican lo acordado, las propuest
 - [Dirección visual v3 aceptada](design-direction.md)
 - [Decisiones de B0 y criterios por bloque](decisions/b0.md)
 - [Auditoría histórica de Linear y límites de evidencia](benchmarks/linear-baseline.md)
+- [Ejecutar el spike local con fixtures](../experiments/b0/README.md)
+- [Contrato de ocho herramientas y ejemplos](benchmarks/contract.md)
+- [Protocolo comparativo, presupuestos y gate de B6](benchmarks/protocol.md)
 - [Q2: imágenes, voz, Swift y sticky notes](q2.md)
 
 ## Se entrega con cada bloque funcional

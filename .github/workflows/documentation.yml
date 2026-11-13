@@ -21,5 +21,13 @@ jobs:
         run: python3 scripts/check_docs.py
       - name: Check published baseline and neutral fixtures
         run: python3 scripts/check_linear_baseline.py
+      - name: Install B0 experiment dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -r experiments/b0/requirements-lock.txt
+      - name: Verify B0 contract and proxy budgets
+        run: |
+          .venv/bin/python -m unittest discover -s experiments/b0 -v
+          .venv/bin/python experiments/b0/measure.py --check
       - name: Check patch formatting
         run: git show --format= --check HEAD

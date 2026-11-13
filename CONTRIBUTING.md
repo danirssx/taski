@@ -6,6 +6,8 @@ Taski acepta pull requests de colaboradores externos mediante forks. Las contrib
 
 Documentación, recorridos de usuario, referencias/propuestas de UI y decisiones de arquitectura. Estamos definiendo el producto: el runtime y sus comandos de instalación todavía no existen. Consulta el [roadmap](docs/roadmap.md) antes de implementar una funcionalidad grande.
 
+También puedes ejecutar y mejorar el [spike del contrato B0](experiments/b0/README.md), con datos ficticios y sin credenciales. Al cambiar contrato, fixtures o presupuestos, ejecuta sus pruebas y el check del informe reproducible además de los checks documentales. El código del spike es experimental, separado del runtime TypeScript que comienza en B1.
+
 Un cambio pequeño de documentación puede proponerse directamente. Para cambios de alcance o arquitectura, describe primero el problema y el enfoque en un issue para coordinar el trabajo.
 
 ## Fork → rama → pull request
