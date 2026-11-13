@@ -1,0 +1,39 @@
+@font-face {
+  font-family: Inter;
+  src: url("../assets/inter-variable.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light dark;
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --canvas: light-dark(#fbfbf9, #171817);
+  --surface: light-dark(#ffffff, #1e201e);
+  --text: light-dark(#252724, #eceee8);
+  --muted: light-dark(#666b63, #a5ada1);
+  --border: light-dark(#e5e7e0, #363b34);
+  --hover: light-dark(#f0f2eb, #292d27);
+  --accent-light: #9f3159;
+  --accent-dark: #f2a2bc;
+  --accent: light-dark(var(--accent-light), var(--accent-dark));
+  --highlight: light-dark(#ffe8a7, #605022);
+  --error: light-dark(#a62e31, #ffaca8);
+  --focus: light-dark(#355b9e, #a9c5fb);
+  --button-bg: light-dark(#2d322b, #e3e9df);
+  --button-ink: light-dark(#ffffff, #242922);
+  --radius: 8px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--canvas);
+  font-synthesis: none;
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }

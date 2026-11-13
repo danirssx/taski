@@ -1,0 +1,50 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-size: 14px; line-height: 1.5; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button, select { cursor: pointer; }
+button { -webkit-tap-highlight-color: transparent; }
+button:disabled { cursor: default; opacity: .5; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+a { color: var(--accent); text-underline-offset: 3px; }
+h1, h2, h3, p { margin: 0; }
+.button { min-height: 36px; border: 1px solid transparent; border-radius: var(--radius); padding: 6px 12px; background: transparent; }
+.button:hover { background: var(--hover); }
+.button--primary { background: var(--button-bg); color: var(--button-ink); }
+.button--primary:hover { background: var(--button-bg); filter: brightness(.94); }
+.field { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.field label { color: var(--muted); font-size: 12px; }
+.field input { min-width: 0; width: 100%; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 9px 11px; }
+.field input[aria-invalid] { border-color: var(--error); }
+.field__error { color: var(--error); font-size: 12px; }
+.field__hint { color: var(--muted); font-size: 12px; }
+.avatar { flex-shrink: 0; display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; font-size: 11px; font-weight: 550; background: var(--hover); color: var(--muted); }
+.badge { display: inline-block; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px; font-size: 11px; }
+.highlight-toggle { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; border: 0; border-radius: var(--radius); background: transparent; color: var(--muted); }
+.highlight-toggle:hover { background: var(--hover); }
+.highlight-toggle[aria-pressed="true"] { color: var(--accent); }
+.task-row { display: flex; align-items: center; gap: var(--space-2); min-width: 0; min-height: 52px; border-radius: var(--radius); padding: 2px 6px; }
+.task-row:hover, .task-row--selected { background: var(--hover); }
+.task-row__open { flex: 1; display: flex; align-items: center; gap: var(--space-3); min-width: 0; min-height: 44px; padding: 3px 4px; border: 0; text-align: left; background: transparent; }
+.task-row__circle { flex-shrink: 0; width: 15px; height: 15px; border: 1px solid var(--muted); border-radius: 50%; }
+.task-row__title { overflow-wrap: anywhere; }
+.task-row__title--highlighted { background: linear-gradient(transparent 62%, var(--highlight) 62%, var(--highlight) 95%, transparent 95%); }
+.task-row__code { margin-left: auto; font-size: 10px; color: var(--muted); white-space: nowrap; }
+.task-row__meta { font-size: 11px; color: var(--muted); }
+.status-message { padding: var(--space-5) 0; color: var(--muted); }
+.status-message strong { font-weight: 500; }
+.status-message p { margin-top: var(--space-1); font-size: 12px; }
+.status-message--error { color: var(--error); }
+.detail-panel { position: sticky; top: var(--space-6); align-self: start; padding: 0 0 var(--space-6) var(--space-5); border-left: 1px solid var(--border); min-width: 0; min-height: 440px; }
+.detail-panel__top { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 12px; margin-bottom: var(--space-5); }
+.detail-panel h2 { font-size: 21px; line-height: 1.35; letter-spacing: -.5px; font-weight: 550; margin-bottom: var(--space-5); overflow-wrap: anywhere; }
+.detail-panel .field { margin-top: var(--space-5); }
+.detail-panel .button--primary { margin-top: var(--space-5); }
+.detail-panel p { color: var(--muted); line-height: 1.7; }
+@media (max-width: 640px) {
+  .task-row__code, .task-row__meta { display: none; }
+  .task-row { min-height: 56px; }
+  .highlight-toggle { width: 44px; height: 44px; }
+  .detail-panel { position: fixed; inset: 0; top: 0; z-index: 10; height: 100dvh; padding: var(--space-5); border: 0; overflow: auto; background: var(--canvas); }
+  .detail-panel .button { min-height: 44px; }
+  .detail-panel .field input { font-size: 16px; }
+}

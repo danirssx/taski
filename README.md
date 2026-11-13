@@ -2,7 +2,9 @@
 
 Un gestor de tareas e ideas para equipos pequeños, con API y MCP como interfaces principales. Diseñado para que personas, Claude Code y Codex trabajen sobre el mismo contexto.
 
-**Estado: B0 completado; Worker y D1 locales disponibles en B1.** Hay un endpoint de salud que comprueba la base; todavía no hay tickets, UI, autenticación, servidor MCP ni despliegue de producción.
+**Estado: B0 completado; Worker y D1 locales disponibles en B1.** Hay un endpoint de salud que comprueba la base; todavía no hay tickets, UI conectada, autenticación, servidor MCP ni despliegue de producción.
+
+B2 añade [configuración validada](docs/configuration.md) y una [base visual reutilizable](docs/ui.md). Para revisar sus componentes con datos ficticios, ejecuta `npm run ui` y abre `http://127.0.0.1:5173`. No es todavía la web conectada a tickets.
 
 La [dirección visual v3](docs/design-direction.md) fue aceptada: captura inline, detalle lateral y una vista móvil centrada en feedback. Las [decisiones de B0](docs/decisions/b0.md) fijan las reglas y los criterios de entrega por bloque.
 
