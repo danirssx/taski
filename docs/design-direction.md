@@ -1,6 +1,6 @@
 # Dirección de diseño · revisión v3
 
-Propuesta en revisión. Se acuerdan los patrones de referencia, pero el diseño necesita consenso antes de comenzar el runtime de B1.
+Baseline aceptado por el mantenedor el 12 de noviembre de 2026 tras revisar el prototipo v3. La dirección publicada en el [PR #1](https://github.com/danirssx/taski/pull/1) queda acordada; su implementación se realizará en B2/B7/B8.
 
 ## Interacciones
 
@@ -21,8 +21,8 @@ Feedback es el punto de entrada. La lista resume título, tipo y autor; los meta
 
 El subrayado suave es un atributo reversible del ticket, independiente del estado, asignación y tipo. Sus cambios deben quedar en la auditoría y poder gestionarse por la misma API/MCP.
 
-## Revisión antes de B1
+## Alcance del visto bueno
 
-Comprobar captura, lista/detalle, resaltado, teclado, edición y feedback móvil en el prototipo. El consenso visual y las pruebas del mock no equivalen a tener backend, D1 o MCP real.
+Se aceptan panel derecho no modal, Inter, captura inline, resaltado independiente del estado, marca discreta y feedback móvil resumido. Los ajustes posteriores conservan estos recorridos y sus criterios de teclado/responsive. El consenso sobre el mock no equivale a tener backend, D1 o MCP real.
 
 Imágenes, voz, SwiftUI y sticky notes pertenecen a [Q2](q2.md); no se presentan como disponibles en esta versión.

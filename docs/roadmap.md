@@ -1,6 +1,6 @@
 # Roadmap
 
-Estado: B0 en revisión de diseño. La dirección v3 está definida; el prototipo se itera hasta alcanzar consenso. El runtime de B1 espera esa revisión. Repositorio y contribución pública inicializados como base documental.
+Estado: diseño v3 aceptado y reglas iniciales cerradas. B0 completa la auditoría y el spike del contrato antes de B1. Ver [decisiones y criterios de entrega](decisions/b0.md), [issues](https://github.com/danirssx/taski/issues) y [milestones](https://github.com/danirssx/taski/milestones). Repositorio y contribución pública inicializados como base documental.
 
 | Bloque | Entregable |
 | --- | --- |
