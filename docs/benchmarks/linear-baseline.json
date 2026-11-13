@@ -1,0 +1,241 @@
+{
+  "date": "2026-11-12",
+  "tokenizer": {
+    "package": "tiktoken",
+    "version": "0.14.0",
+    "encoding": "o200k_base",
+    "interpretation": "Proxy comparison, not actual Claude/Codex session billing or usage."
+  },
+  "scope": "16 read-only calls recorded; an additional discovery read is excluded. One issue, one project, two comments; no create/edit benchmarking.",
+  "groups": {
+    "get_default": {
+      "n": 3,
+      "median_ms": 524,
+      "min_ms": 504,
+      "max_ms": 3260,
+      "response_tokens_proxy": 2522,
+      "args_tokens_proxy": 7,
+      "tool_io_tokens_proxy": 2529,
+      "response_chars": 7734
+    },
+    "get_compact": {
+      "n": 3,
+      "median_ms": 1562,
+      "min_ms": 342,
+      "max_ms": 1978,
+      "response_tokens_proxy": 54,
+      "args_tokens_proxy": 20,
+      "tool_io_tokens_proxy": 74,
+      "response_chars": 203
+    },
+    "get_work": {
+      "n": 3,
+      "median_ms": 590,
+      "min_ms": 444,
+      "max_ms": 1495,
+      "response_tokens_proxy": 1873,
+      "args_tokens_proxy": 22,
+      "tool_io_tokens_proxy": 1895,
+      "response_chars": 6019
+    },
+    "list_default": {
+      "n": 3,
+      "median_ms": 1358,
+      "min_ms": 1349,
+      "max_ms": 2287,
+      "response_tokens_proxy": 5987,
+      "args_tokens_proxy": 21,
+      "tool_io_tokens_proxy": 6008,
+      "response_chars": 16776
+    },
+    "list_compact": {
+      "n": 3,
+      "median_ms": 602,
+      "min_ms": 591,
+      "max_ms": 2055,
+      "response_tokens_proxy": 681,
+      "args_tokens_proxy": 34,
+      "tool_io_tokens_proxy": 715,
+      "response_chars": 2009
+    },
+    "comments": {
+      "n": 1,
+      "median_ms": 1626,
+      "min_ms": 1626,
+      "max_ms": 1626,
+      "response_tokens_proxy": 1485,
+      "args_tokens_proxy": 12,
+      "tool_io_tokens_proxy": 1497,
+      "response_chars": 4515
+    }
+  },
+  "catalogs": {
+    "all": {
+      "tools": 70,
+      "description_chars": 269408,
+      "description_tokens_proxy": 57699,
+      "declaration_chars": 45433,
+      "declaration_tokens_proxy": 11986
+    },
+    "list_and_get": {
+      "tools": 2,
+      "description_chars": 10472,
+      "description_tokens_proxy": 2501,
+      "declaration_chars": 4114,
+      "declaration_tokens_proxy": 1208
+    }
+  },
+  "projection": {
+    "status": "local shape projection only; not a Taski MCP benchmark",
+    "linear_compact_normalized_tokens": 681,
+    "taski_proposed_with_version_tokens": 716,
+    "difference_percent": 5.14
+  },
+  "provenance": "Historical read-only session connector observation. Aggregate data only; private source responses are excluded. Neutral fixtures are separate and do not reproduce these historical counts.",
+  "samples": [
+    {
+      "key": "get_default_1",
+      "ms": 504,
+      "response_chars": 7734,
+      "response_utf8_bytes": 7798,
+      "response_tokens_proxy": 2522,
+      "args_tokens_proxy": 7,
+      "tool_io_tokens_proxy": 2529
+    },
+    {
+      "key": "get_default_2",
+      "ms": 3260,
+      "response_chars": 7734,
+      "response_utf8_bytes": 7798,
+      "response_tokens_proxy": 2522,
+      "args_tokens_proxy": 7,
+      "tool_io_tokens_proxy": 2529
+    },
+    {
+      "key": "get_default_3",
+      "ms": 524,
+      "response_chars": 7734,
+      "response_utf8_bytes": 7798,
+      "response_tokens_proxy": 2522,
+      "args_tokens_proxy": 7,
+      "tool_io_tokens_proxy": 2529
+    },
+    {
+      "key": "get_compact_1",
+      "ms": 342,
+      "response_chars": 203,
+      "response_utf8_bytes": 205,
+      "response_tokens_proxy": 54,
+      "args_tokens_proxy": 20,
+      "tool_io_tokens_proxy": 74
+    },
+    {
+      "key": "get_compact_2",
+      "ms": 1562,
+      "response_chars": 203,
+      "response_utf8_bytes": 205,
+      "response_tokens_proxy": 54,
+      "args_tokens_proxy": 20,
+      "tool_io_tokens_proxy": 74
+    },
+    {
+      "key": "get_compact_3",
+      "ms": 1978,
+      "response_chars": 203,
+      "response_utf8_bytes": 205,
+      "response_tokens_proxy": 54,
+      "args_tokens_proxy": 20,
+      "tool_io_tokens_proxy": 74
+    },
+    {
+      "key": "get_work_1",
+      "ms": 1495,
+      "response_chars": 6019,
+      "response_utf8_bytes": 6080,
+      "response_tokens_proxy": 1873,
+      "args_tokens_proxy": 22,
+      "tool_io_tokens_proxy": 1895
+    },
+    {
+      "key": "get_work_2",
+      "ms": 590,
+      "response_chars": 6019,
+      "response_utf8_bytes": 6080,
+      "response_tokens_proxy": 1873,
+      "args_tokens_proxy": 22,
+      "tool_io_tokens_proxy": 1895
+    },
+    {
+      "key": "get_work_3",
+      "ms": 444,
+      "response_chars": 6019,
+      "response_utf8_bytes": 6080,
+      "response_tokens_proxy": 1873,
+      "args_tokens_proxy": 22,
+      "tool_io_tokens_proxy": 1895
+    },
+    {
+      "key": "list_default_1",
+      "ms": 1349,
+      "response_chars": 16776,
+      "response_utf8_bytes": 16908,
+      "response_tokens_proxy": 5987,
+      "args_tokens_proxy": 21,
+      "tool_io_tokens_proxy": 6008
+    },
+    {
+      "key": "list_default_2",
+      "ms": 2287,
+      "response_chars": 16776,
+      "response_utf8_bytes": 16908,
+      "response_tokens_proxy": 5987,
+      "args_tokens_proxy": 21,
+      "tool_io_tokens_proxy": 6008
+    },
+    {
+      "key": "list_default_3",
+      "ms": 1358,
+      "response_chars": 16776,
+      "response_utf8_bytes": 16908,
+      "response_tokens_proxy": 5987,
+      "args_tokens_proxy": 21,
+      "tool_io_tokens_proxy": 6008
+    },
+    {
+      "key": "list_compact_1",
+      "ms": 602,
+      "response_chars": 2009,
+      "response_utf8_bytes": 2049,
+      "response_tokens_proxy": 681,
+      "args_tokens_proxy": 34,
+      "tool_io_tokens_proxy": 715
+    },
+    {
+      "key": "list_compact_2",
+      "ms": 2055,
+      "response_chars": 2009,
+      "response_utf8_bytes": 2049,
+      "response_tokens_proxy": 681,
+      "args_tokens_proxy": 34,
+      "tool_io_tokens_proxy": 715
+    },
+    {
+      "key": "list_compact_3",
+      "ms": 591,
+      "response_chars": 2009,
+      "response_utf8_bytes": 2049,
+      "response_tokens_proxy": 681,
+      "args_tokens_proxy": 34,
+      "tool_io_tokens_proxy": 715
+    },
+    {
+      "key": "comments_1",
+      "ms": 1626,
+      "response_chars": 4515,
+      "response_utf8_bytes": 4553,
+      "response_tokens_proxy": 1485,
+      "args_tokens_proxy": 12,
+      "tool_io_tokens_proxy": 1497
+    }
+  ]
+}

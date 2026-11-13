@@ -19,5 +19,7 @@ jobs:
           persist-credentials: false
       - name: Check local documentation links
         run: python3 scripts/check_docs.py
+      - name: Check published baseline and neutral fixtures
+        run: python3 scripts/check_linear_baseline.py
       - name: Check patch formatting
         run: git show --format= --check HEAD
