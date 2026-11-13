@@ -18,12 +18,12 @@ Taski está pensado para equipos pequeños que necesitan capturar tareas e ideas
 - Captura inline, panel derecho en escritorio y feedback resumido en móvil.
 - Resaltado individual reversible de tareas, con auditoría.
 
-## Decisiones abiertas de B0
+## Decisiones cerradas de B0
 
-- Consenso sobre el prototipo de la [dirección visual v3](design-direction.md): panel de Superlist, Inter/inline y resaltado de Timestripe.
-- Política de cierre por agentes: terminar tickets o dejarlos Por revisar para una persona.
+- Aceptada la [dirección visual v3](design-direction.md): panel derecho, Inter/inline y resaltado individual.
+- Los agentes dejan el trabajo en `in_review`; una persona confirma `done`. Un encargo humano explícito puede autorizar al agente a cerrar los tickets de ese encargo, dejando constancia de la autorización. Esto no habilita el cierre autónomo del resto del proyecto.
 
-La configuración debe poder representar la política elegida sin mezclarla con la UI.
+La política predeterminada será `agentsCanComplete: false`, independiente de UI y transporte. HTTP y MCP aplicarán la misma regla en el núcleo; B3/B4 implementarán su validación y auditoría. En la primera versión la identidad es declarada, no una garantía de autenticación individual. Ver [decisiones de B0](decisions/b0.md).
 
 ## Fases posteriores
 

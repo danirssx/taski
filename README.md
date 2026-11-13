@@ -2,9 +2,9 @@
 
 Un gestor de tareas e ideas para equipos pequeños, con API y MCP como interfaces principales. Diseñado para que personas, Claude Code y Codex trabajen sobre el mismo contexto.
 
-**Estado: definición de producto y documentación inicial.** Todavía no hay aplicación instalable, backend, servidor MCP ni despliegue de producción. El diseño de la UI está en exploración.
+**Estado: alcance y diseño inicial acordados; B0 en ejecución.** Todavía no hay aplicación instalable, backend, servidor MCP ni despliegue de producción.
 
-La [revisión visual v3](docs/design-direction.md) explora captura inline, detalle lateral y una vista móvil centrada en feedback. Se revisará hasta alcanzar consenso antes de desarrollar el runtime de B1.
+La [dirección visual v3](docs/design-direction.md) fue aceptada: captura inline, detalle lateral y una vista móvil centrada en feedback. Las [decisiones de B0](docs/decisions/b0.md) fijan las reglas y los criterios de entrega por bloque.
 
 ## Dirección del proyecto
 
