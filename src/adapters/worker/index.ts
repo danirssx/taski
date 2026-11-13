@@ -1,10 +1,12 @@
 import { healthResponse } from "../http/health.ts";
 import { checkHealth } from "../../application/health.ts";
 import { d1Readiness } from "../storage/d1-readiness.ts";
+import "../../config/index.ts";
 
 interface Env {
   DB: D1Database;
 }
+
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
