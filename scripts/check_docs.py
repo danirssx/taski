@@ -14,7 +14,7 @@ def main() -> int:
     root = Path(__file__).resolve().parents[1]
     errors = []
     checked = 0
-    excluded = {".git", ".venv", "node_modules"}
+    excluded = {".git", ".venv", "node_modules", "dist", ".wrangler"}
     documents = sorted(path for path in root.rglob("*.md") if not excluded.intersection(path.parts))
     for document in documents:
         text = document.read_text(encoding="utf-8")
