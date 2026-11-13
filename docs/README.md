@@ -6,6 +6,7 @@ Estado: B0 completado y base TypeScript/Worker local de B1. Aún no hay gestión
 
 - [Inicio y verificación local](../README.md)
 - [Desarrollo, comandos y estructura TypeScript](development.md)
+- [Configuración, presets e identidad estable](configuration.md)
 - [Arrancar Worker y D1 locales](getting-started.md)
 - [Solución de problemas de arranque](troubleshooting.md)
 - [Evidencia y validación reproducible del onboarding B1](verification/b1-onboarding.md)

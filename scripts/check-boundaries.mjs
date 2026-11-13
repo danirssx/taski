@@ -8,7 +8,8 @@ const root = fileURLToPath(new URL("../src/", import.meta.url));
 const allowed = {
   domain: ["domain"],
   application: ["domain", "application"],
-  adapters: ["domain", "application", "adapters"],
+  adapters: ["domain", "application", "adapters", "config"],
+  config: ["config"],
   client: ["client"],
   web: ["web", "client"],
 };

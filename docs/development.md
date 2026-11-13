@@ -6,12 +6,15 @@ B1 incorpora un único proyecto TypeScript con npm y lockfile. No hay monorepo n
 | --- | --- | --- |
 | `src/domain` | Reglas y tipos del producto, en B3 | Dominio. |
 | `src/application` | Casos de uso y puertos | Dominio y aplicación, sin plataformas. |
-| `src/adapters` | HTTP, Worker, almacenamiento y MCP | Núcleo y adaptadores. |
+| `src/config` | Presets y validación de instalación | Configuración, sin importar núcleo o adaptadores. |
+| `src/adapters` | HTTP, Worker, almacenamiento y MCP | Núcleo, configuración y adaptadores. |
 | `src/client` | Cliente HTTP independiente, en B5 | Cliente y APIs web estándar, sin React/Cloudflare. |
 | `src/web` | Presentación, en B2/B7 | Web y cliente. |
 | `experiments/b0` | Spike Python independiente | No se importa desde `src`. |
 
 Las carpetas aún sin implementación tienen un README de alcance. No confundirlas con capacidades disponibles. El tipo de salud vive en aplicación; la traducción a HTTP vive en el adaptador.
+
+El Worker importa la [configuración](configuration.md) en su frontera de composición; el núcleo no importa presets. La validación de configuración no se mezcla con el almacenamiento ni presenta todavía una API de proyecto.
 
 ## Herramientas
 
