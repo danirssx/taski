@@ -4,6 +4,7 @@
   "main": "src/adapters/worker/index.ts",
   "compatibility_date": "2026-11-12",
   "workers_dev": false,
+  "dev": { "ip": "127.0.0.1", "port": 8787 },
   "d1_databases": [
     {
       "binding": "DB",
