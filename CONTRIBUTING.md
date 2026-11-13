@@ -4,7 +4,7 @@ Taski acepta pull requests de colaboradores externos mediante forks. Las contrib
 
 ## Qué se puede aportar hoy
 
-Documentación, recorridos de usuario, referencias/propuestas de UI y decisiones de arquitectura. Estamos definiendo el producto: el runtime y sus comandos de instalación todavía no existen. Consulta el [roadmap](docs/roadmap.md) antes de implementar una funcionalidad grande.
+Documentación, recorridos de usuario, UI, arquitectura y cambios enfocados en la base TypeScript/Worker local. Consulta [desarrollo y estructura](docs/development.md) y el [roadmap](docs/roadmap.md) antes de implementar una funcionalidad grande. Los tickets, la UI conectada y el servidor MCP aún no están implementados.
 
 También puedes ejecutar y mejorar el [spike del contrato B0](experiments/b0/README.md), con datos ficticios y sin credenciales. Al cambiar contrato, fixtures o presupuestos, ejecuta sus pruebas y el check del informe reproducible además de los checks documentales. El código del spike es experimental, separado del runtime TypeScript que comienza en B1.
 
@@ -28,6 +28,8 @@ git switch -c docs/mi-mejora
 python3 scripts/check_docs.py
 git diff --check
 ```
+
+Para código TypeScript o configuración del Worker, instala con `npm ci` y ejecuta `npm run check`. Incluye el lockfile si cambia una dependencia. Mantén dominio/aplicación libres de React y Cloudflare. Los comandos y las fronteras están en [desarrollo](docs/development.md).
 
 4. Revisa y publica tu rama en tu fork:
 

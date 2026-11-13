@@ -2,7 +2,7 @@
 
 Un gestor de tareas e ideas para equipos pequeños, con API y MCP como interfaces principales. Diseñado para que personas, Claude Code y Codex trabajen sobre el mismo contexto.
 
-**Estado: B0 completado: alcance, auditoría y spike local del contrato.** Todavía no hay aplicación instalable, backend, servidor MCP ni despliegue de producción. El siguiente bloque es B1, base TypeScript y ejecución local de Worker/D1.
+**Estado: B0 completado; B1 incorpora la base TypeScript y Worker local.** Por ahora hay un endpoint de salud; todavía no hay tickets, UI, autenticación, servidor MCP ni despliegue de producción. D1 se incorpora en B1-02.
 
 La [dirección visual v3](docs/design-direction.md) fue aceptada: captura inline, detalle lateral y una vista móvil centrada en feedback. Las [decisiones de B0](docs/decisions/b0.md) fijan las reglas y los criterios de entrega por bloque.
 
@@ -35,7 +35,14 @@ cd taski
 python3 scripts/check_docs.py
 ```
 
-Este comando verifica enlaces locales de documentación; no arranca una aplicación. Los comandos de desarrollo de la app se documentarán cuando exista su implementación.
+Este comando verifica enlaces locales de documentación. Para arrancar el Worker se necesita Node 24.11.1 o Node 26 desde 26.3.0 y npm 11:
+
+```sh
+npm ci
+npm run dev
+```
+
+Abre `http://127.0.0.1:8787/health`. Consulta [desarrollo y estructura](docs/development.md) para comandos, límites y comprobaciones. No se necesita una cuenta Cloudflare.
 
 El [spike experimental de B0](experiments/b0/README.md) sí puede ejecutarse con fixtures ficticios para comprobar el contrato y sus presupuestos proxy. No requiere credenciales; no es un servidor MCP ni demuestra todavía ventaja frente a Linear.
 

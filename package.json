@@ -1,0 +1,25 @@
+{
+  "name": "taski",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": "^24.11.1 || ^26.3.0",
+    "npm": ">=11"
+  },
+  "packageManager": "npm@11.16.0",
+  "scripts": {
+    "dev": "wrangler dev --local --ip 127.0.0.1 --port 8787",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.core.json",
+    "check:boundaries": "node scripts/check-boundaries.mjs",
+    "check": "npm run typecheck && npm run check:boundaries && npm run build",
+    "docs:check": "python3 scripts/check_docs.py && python3 scripts/check_linear_baseline.py"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20261113.1",
+    "typescript": "6.0.3",
+    "wrangler": "4.161.0"
+  }
+}

@@ -1,10 +1,11 @@
 # Documentación de Taski
 
-Estado: B0 completado. Estas guías explican lo acordado, la auditoría y el spike local; todavía no hay instrucciones de instalación de una aplicación funcional.
+Estado: B0 completado y base TypeScript/Worker local de B1. Aún no hay gestión funcional de tickets o servidor MCP.
 
 ## Disponible ahora
 
 - [Inicio y verificación local](../README.md)
+- [Desarrollo, comandos y estructura TypeScript](development.md)
 - [Contribuir por fork y PR](../CONTRIBUTING.md)
 - [Alcance del producto](product-scope.md)
 - [Arquitectura y dataflow propuestos](architecture.md)
