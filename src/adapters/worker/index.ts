@@ -1,7 +1,13 @@
 import { healthResponse } from "../http/health.ts";
+import { checkHealth } from "../../application/health.ts";
+import { d1Readiness } from "../storage/d1-readiness.ts";
+
+interface Env {
+  DB: D1Database;
+}
 
 export default {
-  fetch(request: Request): Response {
+  async fetch(request: Request, env: Env): Promise<Response> {
     if (new URL(request.url).pathname !== "/health") {
       return Response.json({ error: { code: "NOT_FOUND" } }, { status: 404 });
     }
@@ -11,6 +17,6 @@ export default {
         headers: { allow: "GET" },
       });
     }
-    return healthResponse({ service: "taski", status: "ok" });
+    return healthResponse(await checkHealth(d1Readiness(env.DB)));
   },
-} satisfies ExportedHandler;
+} satisfies ExportedHandler<Env>;

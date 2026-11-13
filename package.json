@@ -12,9 +12,12 @@
   "scripts": {
     "dev": "wrangler dev --local --ip 127.0.0.1 --port 8787",
     "build": "wrangler deploy --dry-run --outdir dist",
+    "db:migrate": "wrangler d1 migrations apply DB --local",
+    "db:check": "wrangler d1 execute DB --local --command \"SELECT bootstrap_version FROM taski_bootstrap WHERE id = 1\"",
+    "test": "node --test tests/*.test.mjs",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.core.json",
     "check:boundaries": "node scripts/check-boundaries.mjs",
-    "check": "npm run typecheck && npm run check:boundaries && npm run build",
+    "check": "npm run typecheck && npm run check:boundaries && npm test && npm run build",
     "docs:check": "python3 scripts/check_docs.py && python3 scripts/check_linear_baseline.py"
   },
   "devDependencies": {

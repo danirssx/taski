@@ -2,7 +2,7 @@
 
 Un gestor de tareas e ideas para equipos pequeños, con API y MCP como interfaces principales. Diseñado para que personas, Claude Code y Codex trabajen sobre el mismo contexto.
 
-**Estado: B0 completado; B1 incorpora la base TypeScript y Worker local.** Por ahora hay un endpoint de salud; todavía no hay tickets, UI, autenticación, servidor MCP ni despliegue de producción. D1 se incorpora en B1-02.
+**Estado: B0 completado; Worker y D1 locales disponibles en B1.** Hay un endpoint de salud que comprueba la base; todavía no hay tickets, UI, autenticación, servidor MCP ni despliegue de producción.
 
 La [dirección visual v3](docs/design-direction.md) fue aceptada: captura inline, detalle lateral y una vista móvil centrada en feedback. Las [decisiones de B0](docs/decisions/b0.md) fijan las reglas y los criterios de entrega por bloque.
 
@@ -39,10 +39,11 @@ Este comando verifica enlaces locales de documentación. Para arrancar el Worker
 
 ```sh
 npm ci
+npm run db:migrate
 npm run dev
 ```
 
-Abre `http://127.0.0.1:8787/health`. Consulta [desarrollo y estructura](docs/development.md) para comandos, límites y comprobaciones. No se necesita una cuenta Cloudflare.
+Abre `http://127.0.0.1:8787/health`: debe responder HTTP 200 y `checks.database: ok`. Sigue la [guía de arranque](docs/getting-started.md) para respuesta completa, persistencia y verificaciones. No se necesita una cuenta Cloudflare.
 
 El [spike experimental de B0](experiments/b0/README.md) sí puede ejecutarse con fixtures ficticios para comprobar el contrato y sus presupuestos proxy. No requiere credenciales; no es un servidor MCP ni demuestra todavía ventaja frente a Linear.
 
