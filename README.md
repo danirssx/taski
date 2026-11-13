@@ -2,7 +2,7 @@
 
 Un gestor de tareas e ideas para equipos pequeños, con API y MCP como interfaces principales. Diseñado para que personas, Claude Code y Codex trabajen sobre el mismo contexto.
 
-**Estado: alcance y diseño inicial acordados; B0 en ejecución.** Todavía no hay aplicación instalable, backend, servidor MCP ni despliegue de producción.
+**Estado: B0 completado: alcance, auditoría y spike local del contrato.** Todavía no hay aplicación instalable, backend, servidor MCP ni despliegue de producción. El siguiente bloque es B1, base TypeScript y ejecución local de Worker/D1.
 
 La [dirección visual v3](docs/design-direction.md) fue aceptada: captura inline, detalle lateral y una vista móvil centrada en feedback. Las [decisiones de B0](docs/decisions/b0.md) fijan las reglas y los criterios de entrega por bloque.
 
@@ -37,6 +37,8 @@ python3 scripts/check_docs.py
 
 Este comando verifica enlaces locales de documentación; no arranca una aplicación. Los comandos de desarrollo de la app se documentarán cuando exista su implementación.
 
+El [spike experimental de B0](experiments/b0/README.md) sí puede ejecutarse con fixtures ficticios para comprobar el contrato y sus presupuestos proxy. No requiere credenciales; no es un servidor MCP ni demuestra todavía ventaja frente a Linear.
+
 ## Documentación
 
 - [Índice y estado de las guías](docs/README.md)
@@ -47,6 +49,7 @@ Este comando verifica enlaces locales de documentación; no arranca una aplicaci
 - [Referencias para explorar el diseño](docs/design-references.md)
 - [Dirección visual actual](docs/design-direction.md)
 - [Q2: imágenes, voz, SwiftUI y sticky notes](docs/q2.md)
+- [Auditoría de Linear](docs/benchmarks/linear-baseline.md), [contrato candidato](docs/benchmarks/contract.md) y [protocolo comparativo](docs/benchmarks/protocol.md)
 
 ## Licencia
 

@@ -1,6 +1,6 @@
 # Roadmap
 
-Estado: diseño v3 aceptado y reglas iniciales cerradas. B0 completa la auditoría y el spike del contrato antes de B1. Ver [decisiones y criterios de entrega](decisions/b0.md), [issues](https://github.com/danirssx/taski/issues) y [milestones](https://github.com/danirssx/taski/milestones). Repositorio y contribución pública inicializados como base documental.
+Estado: B0 completado con diseño aceptado, reglas, [auditoría saneada](benchmarks/linear-baseline.md) y [spike reproducible](../experiments/b0/README.md). B1 puede iniciar la base TypeScript/Worker/D1. Ver [decisiones y criterios de entrega](decisions/b0.md), [issues](https://github.com/danirssx/taski/issues) y [milestones](https://github.com/danirssx/taski/milestones).
 
 | Bloque | Entregable |
 | --- | --- |

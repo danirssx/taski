@@ -1,0 +1,595 @@
+{
+  "instructions": "One project per installation. Reuse versioned configuration and activity cursors. Lists are summaries; fetch needed content. Agent completion requires explicit human delegation. Writes are idempotent and version checked.",
+  "tools": [
+    {
+      "name": "get_project",
+      "description": "Read configuration; send its known version to avoid repeating members and labels.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "knownVersion": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "configVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "notModified": {
+            "type": "boolean"
+          },
+          "project": {
+            "type": "object"
+          },
+          "activityCursor": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "configVersion",
+          "notModified",
+          "activityCursor"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_tickets",
+      "description": "List compact summaries. Description, comments and history require get_ticket.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "assigneeId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "enum": [
+              "todo",
+              "in_progress",
+              "in_review",
+              "done"
+            ]
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 20
+          },
+          "cursor": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "activityCursor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "omitted": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "activityCursor",
+          "omitted"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_ticket",
+      "description": "Read a ticket and recent comments together. Use full view for all fields; page older comments explicitly.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^DEMO-[0-9]{3,}$"
+          },
+          "view": {
+            "enum": [
+              "summary",
+              "work",
+              "full"
+            ],
+            "default": "work"
+          },
+          "commentsLimit": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50,
+            "default": 5
+          },
+          "commentsCursor": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "type": "object"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "nextCommentsCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "omitted": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "ticket",
+          "comments",
+          "nextCommentsCursor",
+          "omitted"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "create_ticket",
+      "description": "Create and optionally assign a ticket in one call. Retry with the same idempotency key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240,
+            "pattern": "\\S"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 100000
+          },
+          "assigneeId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "area": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "task",
+              "feedback"
+            ]
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "title",
+          "idempotencyKey"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "changed": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "commentId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key",
+          "url",
+          "version",
+          "changed"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "update_ticket",
+      "description": "Atomically apply changes and an optional progress comment. Supply expectedVersion; stale writes fail.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^DEMO-[0-9]{3,}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 1
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240,
+                "pattern": "\\S"
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "status": {
+                "enum": [
+                  "todo",
+                  "in_progress",
+                  "in_review",
+                  "done"
+                ]
+              },
+              "assigneeId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "area": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "enum": [
+                  "task",
+                  "feedback"
+                ]
+              },
+              "highlighted": {
+                "type": "boolean"
+              },
+              "prUrl": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^https://[^\\s]+$"
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "descriptionPatch": {
+            "type": "object",
+            "properties": {
+              "find": {
+                "type": "string",
+                "minLength": 1
+              },
+              "replace": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "find",
+              "replace"
+            ],
+            "additionalProperties": false
+          },
+          "comment": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20000
+          }
+        },
+        "required": [
+          "key",
+          "expectedVersion",
+          "idempotencyKey"
+        ],
+        "additionalProperties": false,
+        "anyOf": [
+          {
+            "required": [
+              "changes"
+            ]
+          },
+          {
+            "required": [
+              "descriptionPatch"
+            ]
+          },
+          {
+            "required": [
+              "comment"
+            ]
+          }
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "changed": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "commentId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key",
+          "url",
+          "version",
+          "changed"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "add_comment",
+      "description": "Add a comment with version and retry protection; use update_ticket when also changing fields.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^DEMO-[0-9]{3,}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 1
+          },
+          "body": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20000
+          }
+        },
+        "required": [
+          "key",
+          "expectedVersion",
+          "idempotencyKey",
+          "body"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "changed": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "commentId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key",
+          "url",
+          "version",
+          "changed"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_activity",
+      "description": "Read concrete changes since a cursor. Invalid or expired cursors require full resynchronization.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "cursor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 20
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "nextCursor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "hasMore"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "link_pull_request",
+      "description": "Set the manual PR URL. Use update_ticket to combine it with status or comment.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^DEMO-[0-9]{3,}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https://[^\\s]+$"
+          }
+        },
+        "required": [
+          "key",
+          "expectedVersion",
+          "idempotencyKey",
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "changed": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "commentId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key",
+          "url",
+          "version",
+          "changed"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}
