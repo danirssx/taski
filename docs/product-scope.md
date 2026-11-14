@@ -1,6 +1,6 @@
 # Alcance inicial
 
-Este documento describe el producto propuesto; no una implementación disponible.
+Este documento describe el alcance de la primera versión. El estado de lo implementado está en [README](../README.md); la existencia de reglas/persistencia no implica que todas las interfaces ya estén disponibles.
 
 Taski está pensado para equipos pequeños que necesitan capturar tareas e ideas y mantener una conversación compartida con sus agentes de desarrollo. Cada instalación sirve a un proyecto y mantiene su propia configuración y base de datos.
 

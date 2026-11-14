@@ -89,7 +89,8 @@ export class TicketService {
   private async request(operation: string, args: Record<string, unknown>, actorInput: Actor) {
     const actor = this.actor(actorInput);
     const idempotencyKey = text(args.idempotencyKey, "idempotencyKey", 128);
-    const fingerprint = await this.runtime.hash(canonical({ operation, args, actor }));
+    // Presentation names, client versions and policy grants are not request parameters.
+    const fingerprint = await this.runtime.hash(canonical({ operation, args, actorId: actor.memberId }));
     await this.repository.initialize(this.context.project);
     const cached = await this.repository.replay(actor.memberId, operation, idempotencyKey, fingerprint);
     return { actor, idempotencyKey, fingerprint, cached };

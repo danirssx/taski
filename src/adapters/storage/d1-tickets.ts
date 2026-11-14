@@ -82,7 +82,16 @@ export class D1TicketRepository implements TicketRepository {
     statements.push(this.db.prepare(`UPDATE mutation_receipts SET receipt=(SELECT json_object('key',key,'url',url,'version',version,'changed',json(?)${optionalComment}) FROM tickets WHERE id=?)
       WHERE actor_id=? AND operation=? AND idempotency_key=?`).bind(JSON.stringify(Object.keys(m.changes)),
       ...(m.comment ? [m.comment.id] : []), t.id, ...scope));
-    await this.db.batch(statements);
+    try {
+      await this.db.batch(statements);
+    } catch (error) {
+      // Another request may have won, or a response may have been lost after commit.
+      // Only a confirmed persisted receipt may turn that failure into success.
+      const confirmed = await this.replay(m.actor.memberId, m.operation, m.idempotencyKey, m.fingerprint);
+      if (confirmed) return confirmed;
+      if (String(error).includes("VERSION_CONFLICT")) throw new TaskiError("VERSION_CONFLICT");
+      throw error;
+    }
     const result = await this.replay(m.actor.memberId, m.operation, m.idempotencyKey, m.fingerprint);
     if (!result) throw new TaskiError("INTERNAL_ERROR");
     return result;

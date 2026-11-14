@@ -10,4 +10,4 @@ Convertir feedback a tarea y resaltar no cambian ID, código, URL o conversació
 
 Errores estables: INVALID_INPUT, UNKNOWN_MEMBER, UNKNOWN_AREA, NOT_FOUND, REVIEW_REQUIRED, PATCH_CONFLICT, EMPTY_UPDATE, VERSION_CONFLICT e IDEMPOTENCY_CONFLICT. El receptor debe releer ante conflicto y conservar texto sin guardar; no incrementar a ciegas la versión. La clave idempotente se consulta antes de rechazar una versión vieja en un reintento idéntico.
 
-Este issue fija el núcleo y el puerto de commit; B3-03 implementa persistencia D1 auditada y B3-04 verifica carreras/reintentos reales. No se exponen escrituras HTTP/MCP hasta completar esos adaptadores y acceso.
+El puerto de commit está implementado por [D1 con auditoría atómica](audit.md), y las [carreras/reintentos](retries.md) se prueban sobre D1 emulado. No se exponen escrituras HTTP/MCP hasta completar esos adaptadores y acceso en B4–B6.

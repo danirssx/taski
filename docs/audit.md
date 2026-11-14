@@ -8,4 +8,4 @@ IDs, hash de petición y reloj se generan en el adaptador de runtime del servido
 
 Una prueba fuerza fallo en INSERT de actividad después de preparar cambio/comentario: D1 revierte todos, incluida la reserva de reintento. Otra verifica actor, hora común y un solo evento para estado+avance. Son pruebas de D1 emulado; el despliegue y recuperación del servicio remoto se validan en B11.
 
-Los recibos almacenan key/URL/versión/campos afectados y commentId cuando existe. La protección de carreras y la traducción de conflictos bajo reintentos simultáneos se completan en B3-04 antes de exponer estas operaciones mediante HTTP/MCP.
+Los recibos almacenan key/URL/versión/campos afectados y commentId cuando existe. La [protección de carreras y traducción de conflictos](retries.md) recupera recibos confirmados después de una colisión o pérdida de respuesta. Estas operaciones todavía no se exponen mediante HTTP/MCP.
