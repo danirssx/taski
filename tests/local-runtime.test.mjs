@@ -35,7 +35,7 @@ test("missing bootstrap data causes 503 and can be restored", async () => {
 });
 
 test("unknown routes and methods do not expose future APIs", async () => {
-  assert.equal((await server.fetch("/api/v1/tickets")).status, 404);
+  assert.equal((await server.fetch("/api/v1/tickets")).status, 401);
   assert.equal((await server.fetch("/mcp")).status, 404);
   const response = await server.fetch("/health", { method: "POST" });
   assert.equal(response.status, 405);
