@@ -1,0 +1,1856 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Taski API",
+    "version": "0.1.0",
+    "description": "Local implemented contract; see docs/api.md and docs/access.md. No production deployment is implied. assigneeId=~ in GET means unassigned."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8787"
+    }
+  ],
+  "security": [
+    {
+      "TeamBearer": [],
+      "MemberHeader": []
+    },
+    {
+      "TeamCookie": []
+    }
+  ],
+  "paths": {
+    "/api/v1/project": {
+      "get": {
+        "operationId": "get_project",
+        "description": "Read project configuration. Send knownVersion to omit unchanged members and labels.",
+        "parameters": [
+          {
+            "name": "knownVersion",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmed result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/get_projectOutput"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Typed error; inspect error.code. 401/403 access, 409 conflict, 429 rate limit, 503 configuration, 500 unconfirmed internal failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tickets": {
+      "get": {
+        "operationId": "list_tickets",
+        "description": "List compact summaries. Cursor retains filters. Use work view for UI metadata; fetch detail separately.",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "todo",
+                "in_progress",
+                "in_review",
+                "done"
+              ]
+            }
+          },
+          {
+            "name": "assigneeId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          {
+            "name": "areaId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "task",
+                "feedback"
+              ]
+            }
+          },
+          {
+            "name": "view",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "summary",
+                "work"
+              ],
+              "default": "summary"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmed result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/list_ticketsOutput"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Typed error; inspect error.code. 401/403 access, 409 conflict, 429 rate limit, 503 configuration, 500 unconfirmed internal failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "create_ticket",
+        "description": "Create and optionally assign in one call. Reuse the same idempotencyKey on retries.",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Confirmed result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/create_ticketOutput"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Typed error; inspect error.code. 401/403 access, 409 conflict, 429 rate limit, 503 configuration, 500 unconfirmed internal failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 240,
+                    "pattern": "\\S"
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 100000
+                  },
+                  "status": {
+                    "enum": [
+                      "todo",
+                      "in_progress",
+                      "in_review",
+                      "done"
+                    ]
+                  },
+                  "assigneeId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "areaId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "type": {
+                    "enum": [
+                      "task",
+                      "feedback"
+                    ]
+                  },
+                  "highlighted": {
+                    "type": "boolean"
+                  },
+                  "prUrl": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "idempotencyKey": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  }
+                },
+                "required": [
+                  "title",
+                  "idempotencyKey"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tickets/{key}": {
+      "get": {
+        "operationId": "get_ticket",
+        "description": "Read a ticket and recent comments together. Full content is never silently truncated; page older comments.",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "view",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "summary",
+                "work",
+                "full"
+              ],
+              "default": "work"
+            }
+          },
+          {
+            "name": "commentsLimit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 50
+            }
+          },
+          {
+            "name": "commentsCursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmed result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/get_ticketOutput"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Typed error; inspect error.code. 401/403 access, 409 conflict, 429 rate limit, 503 configuration, 500 unconfirmed internal failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "update_ticket",
+        "description": "Atomically change fields/patch and add progress. Supply expectedVersion; stale writes fail.",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmed result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/update_ticketOutput"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Typed error; inspect error.code. 401/403 access, 409 conflict, 429 rate limit, 503 configuration, 500 unconfirmed internal failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expectedVersion": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "idempotencyKey": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "changes": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 240,
+                        "pattern": "\\S"
+                      },
+                      "description": {
+                        "type": "string",
+                        "maxLength": 100000
+                      },
+                      "status": {
+                        "enum": [
+                          "todo",
+                          "in_progress",
+                          "in_review",
+                          "done"
+                        ]
+                      },
+                      "assigneeId": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "areaId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "type": {
+                        "enum": [
+                          "task",
+                          "feedback"
+                        ]
+                      },
+                      "highlighted": {
+                        "type": "boolean"
+                      },
+                      "prUrl": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [],
+                    "additionalProperties": false
+                  },
+                  "descriptionPatch": {
+                    "type": "object",
+                    "properties": {
+                      "find": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100000
+                      },
+                      "replace": {
+                        "type": "string",
+                        "maxLength": 100000
+                      }
+                    },
+                    "required": [
+                      "find",
+                      "replace"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "comment": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  }
+                },
+                "required": [
+                  "expectedVersion",
+                  "idempotencyKey"
+                ],
+                "additionalProperties": false,
+                "anyOf": [
+                  {
+                    "required": [
+                      "changes"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "descriptionPatch"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "comment"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tickets/{key}/comments": {
+      "post": {
+        "operationId": "add_comment",
+        "description": "Add one comment with version and retry protection. Combine field changes using update_ticket.",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmed result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/add_commentOutput"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Typed error; inspect error.code. 401/403 access, 409 conflict, 429 rate limit, 503 configuration, 500 unconfirmed internal failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expectedVersion": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "idempotencyKey": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "body": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  }
+                },
+                "required": [
+                  "expectedVersion",
+                  "idempotencyKey",
+                  "body"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/activity": {
+      "get": {
+        "operationId": "list_activity",
+        "description": "Read concrete changes since cursor, optionally for one ticket. Expired cursors require resynchronization.",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20
+            }
+          },
+          {
+            "name": "ticketKey",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmed result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/list_activityOutput"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Typed error; inspect error.code. 401/403 access, 409 conflict, 429 rate limit, 503 configuration, 500 unconfirmed internal failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tickets/{key}/pull-request": {
+      "put": {
+        "operationId": "link_pull_request",
+        "description": "Set a manual PR URL; does not query GitHub. Use update_ticket to combine PR and status.",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Confirmed result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/link_pull_requestOutput"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Typed error; inspect error.code. 401/403 access, 409 conflict, 429 rate limit, 503 configuration, 500 unconfirmed internal failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expectedVersion": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "idempotencyKey": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "url": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "expectedVersion",
+                  "idempotencyKey",
+                  "url"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/access": {
+      "get": {
+        "operationId": "get_access_options",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Public project/brand names and selectable configured members; no secrets or tickets"
+          }
+        }
+      }
+    },
+    "/api/v1/session": {
+      "post": {
+        "operationId": "create_session",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Selected member and self_selected assurance; session cookie for POST/PUT"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "memberId": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                },
+                "required": [
+                  "memberId",
+                  "code"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "get_session",
+        "security": [
+          {
+            "TeamCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Selected member and self_selected assurance; session cookie for POST/PUT"
+          }
+        }
+      },
+      "put": {
+        "operationId": "change_member",
+        "security": [
+          {
+            "TeamCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Selected member and self_selected assurance; session cookie for POST/PUT"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "memberId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "memberId"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "logout",
+        "security": [
+          {
+            "TeamCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Session revoked; cookie cleared"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "get_projectInput": {
+        "type": "object",
+        "properties": {
+          "knownVersion": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "get_projectOutput": {
+        "type": "object",
+        "properties": {
+          "configVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "notModified": {
+            "type": "boolean"
+          },
+          "project": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "prefix": {
+                "type": "string",
+                "minLength": 1
+              },
+              "baseUrl": {
+                "type": "string",
+                "minLength": 1
+              },
+              "locale": {
+                "const": "es"
+              },
+              "brand": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "accentLight": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "accentDark": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "name",
+                  "accentLight",
+                  "accentDark"
+                ],
+                "additionalProperties": false
+              },
+              "members": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "defaultView": {
+                      "enum": [
+                        "work",
+                        "feedback"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "defaultView"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "areas": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "defaultAreaId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "statusLabels": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "typeLabels": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "policy": {
+                "type": "object",
+                "properties": {
+                  "agentsCanComplete": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "agentsCanComplete"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "prefix",
+              "baseUrl",
+              "locale",
+              "brand",
+              "members",
+              "areas",
+              "defaultAreaId",
+              "statusLabels",
+              "typeLabels",
+              "policy"
+            ],
+            "additionalProperties": false
+          },
+          "activityCursor": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "configVersion",
+          "notModified",
+          "activityCursor"
+        ],
+        "additionalProperties": false
+      },
+      "list_ticketsInput": {
+        "type": "object",
+        "properties": {
+          "cursor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 20
+          },
+          "status": {
+            "enum": [
+              "todo",
+              "in_progress",
+              "in_review",
+              "done"
+            ]
+          },
+          "assigneeId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "areaId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "task",
+              "feedback"
+            ]
+          },
+          "view": {
+            "enum": [
+              "summary",
+              "work"
+            ],
+            "default": "summary"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "list_ticketsOutput": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "enum": [
+                    "todo",
+                    "in_progress",
+                    "in_review",
+                    "done"
+                  ]
+                },
+                "assigneeId": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "highlighted": {
+                  "type": "boolean"
+                },
+                "version": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "areaId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "type": {
+                  "enum": [
+                    "task",
+                    "feedback"
+                  ]
+                },
+                "prUrl": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "key",
+                "title",
+                "status",
+                "assigneeId",
+                "highlighted",
+                "version"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "activityCursor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "omitted": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "activityCursor",
+          "omitted"
+        ],
+        "additionalProperties": false
+      },
+      "get_ticketInput": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "view": {
+            "enum": [
+              "summary",
+              "work",
+              "full"
+            ],
+            "default": "work"
+          },
+          "commentsLimit": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 50
+          },
+          "commentsCursor": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "get_ticketOutput": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "enum": [
+                  "todo",
+                  "in_progress",
+                  "in_review",
+                  "done"
+                ]
+              },
+              "assigneeId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "highlighted": {
+                "type": "boolean"
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "areaId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "enum": [
+                  "task",
+                  "feedback"
+                ]
+              },
+              "prUrl": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string"
+              },
+              "createdBy": {
+                "type": "string",
+                "minLength": 1
+              },
+              "createdAt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "updatedAt": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "key",
+              "title",
+              "status",
+              "assigneeId",
+              "highlighted",
+              "version"
+            ],
+            "additionalProperties": false
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ticketVersion": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "body": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "actor": {
+                  "type": "object",
+                  "properties": {
+                    "memberId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "kind": {
+                      "enum": [
+                        "person",
+                        "agent"
+                      ]
+                    },
+                    "channel": {
+                      "enum": [
+                        "web",
+                        "http",
+                        "mcp"
+                      ]
+                    },
+                    "client": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "identityAssurance": {
+                      "const": "self_selected"
+                    },
+                    "authorizationRef": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "memberId",
+                    "name",
+                    "kind",
+                    "channel",
+                    "client",
+                    "identityAssurance"
+                  ],
+                  "additionalProperties": false
+                },
+                "createdAt": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "id",
+                "ticketVersion",
+                "body",
+                "actor",
+                "createdAt"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "nextCommentsCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "omitted": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "ticket",
+          "comments",
+          "nextCommentsCursor",
+          "omitted"
+        ],
+        "additionalProperties": false
+      },
+      "create_ticketInput": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240,
+            "pattern": "\\S"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 100000
+          },
+          "status": {
+            "enum": [
+              "todo",
+              "in_progress",
+              "in_review",
+              "done"
+            ]
+          },
+          "assigneeId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "areaId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "task",
+              "feedback"
+            ]
+          },
+          "highlighted": {
+            "type": "boolean"
+          },
+          "prUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "title",
+          "idempotencyKey"
+        ],
+        "additionalProperties": false
+      },
+      "create_ticketOutput": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "changed": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "commentId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key",
+          "url",
+          "version",
+          "changed"
+        ],
+        "additionalProperties": false
+      },
+      "update_ticketInput": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240,
+                "pattern": "\\S"
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 100000
+              },
+              "status": {
+                "enum": [
+                  "todo",
+                  "in_progress",
+                  "in_review",
+                  "done"
+                ]
+              },
+              "assigneeId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "areaId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "enum": [
+                  "task",
+                  "feedback"
+                ]
+              },
+              "highlighted": {
+                "type": "boolean"
+              },
+              "prUrl": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "descriptionPatch": {
+            "type": "object",
+            "properties": {
+              "find": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100000
+              },
+              "replace": {
+                "type": "string",
+                "maxLength": 100000
+              }
+            },
+            "required": [
+              "find",
+              "replace"
+            ],
+            "additionalProperties": false
+          },
+          "comment": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20000
+          }
+        },
+        "required": [
+          "key",
+          "expectedVersion",
+          "idempotencyKey"
+        ],
+        "additionalProperties": false,
+        "anyOf": [
+          {
+            "required": [
+              "changes"
+            ]
+          },
+          {
+            "required": [
+              "descriptionPatch"
+            ]
+          },
+          {
+            "required": [
+              "comment"
+            ]
+          }
+        ]
+      },
+      "update_ticketOutput": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "changed": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "commentId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key",
+          "url",
+          "version",
+          "changed"
+        ],
+        "additionalProperties": false
+      },
+      "add_commentInput": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "body": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20000
+          }
+        },
+        "required": [
+          "key",
+          "expectedVersion",
+          "idempotencyKey",
+          "body"
+        ],
+        "additionalProperties": false
+      },
+      "add_commentOutput": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "changed": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "commentId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key",
+          "url",
+          "version",
+          "changed"
+        ],
+        "additionalProperties": false
+      },
+      "list_activityInput": {
+        "type": "object",
+        "properties": {
+          "cursor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 20
+          },
+          "ticketKey": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "list_activityOutput": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "seq": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "ticketKey": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ticketVersion": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "actor": {
+                  "type": "object",
+                  "properties": {
+                    "memberId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "kind": {
+                      "enum": [
+                        "person",
+                        "agent"
+                      ]
+                    },
+                    "channel": {
+                      "enum": [
+                        "web",
+                        "http",
+                        "mcp"
+                      ]
+                    },
+                    "client": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "identityAssurance": {
+                      "const": "self_selected"
+                    },
+                    "authorizationRef": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "memberId",
+                    "name",
+                    "kind",
+                    "channel",
+                    "client",
+                    "identityAssurance"
+                  ],
+                  "additionalProperties": false
+                },
+                "changes": {
+                  "type": "object"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "seq",
+                "ticketKey",
+                "ticketVersion",
+                "actor",
+                "changes",
+                "createdAt"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "nextCursor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "hasMore"
+        ],
+        "additionalProperties": false
+      },
+      "link_pull_requestInput": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key",
+          "expectedVersion",
+          "idempotencyKey",
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "link_pull_requestOutput": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "changed": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "commentId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "key",
+          "url",
+          "version",
+          "changed"
+        ],
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "TeamBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Installation's shared code; never embed in URL/tool args"
+      },
+      "MemberHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Taski-Member"
+      },
+      "TeamCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "taski_session"
+      }
+    }
+  }
+}

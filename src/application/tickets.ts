@@ -1,5 +1,5 @@
 import { TaskiError, canonical, integer, record, statuses, text } from "../domain/ticket.ts";
-import type { Activity, Actor, Comment, Receipt, Ticket, TicketChanges, TicketDraft } from "../domain/ticket.ts";
+import type { Activity, Actor, Comment, Receipt, Ticket, TicketChanges, TicketDraft, TicketSummary } from "../domain/ticket.ts";
 
 export interface ProjectContext {
   readonly project: { readonly id: string; readonly prefix: string; readonly baseUrl: string };
@@ -18,11 +18,11 @@ export interface Mutation {
 export interface TicketRepository {
   initialize(project: ProjectContext["project"]): Promise<void>;
   get(reference: string): Promise<Ticket | null>;
-  list(query: ListQuery): Promise<Ticket[]>;
+  list(query: ListQuery): Promise<TicketSummary[]>;
   replay(actorId: string, operation: string, key: string, fingerprint: string): Promise<Receipt | null>;
   commit(mutation: Mutation): Promise<Receipt>;
   comments(ticketId: string, beforeVersion: number, limit: number): Promise<Comment[]>;
-  activity(after: number, limit: number): Promise<Activity[]>;
+  activity(after: number, limit: number, ticketId?: string): Promise<Activity[]>;
   position(): Promise<{ epoch: string; sequence: number }>;
 }
 
@@ -104,8 +104,9 @@ export class TicketService {
     return ticket;
   }
 
-  async list(query: ListQuery): Promise<Ticket[]> {
-    integer(query.limit, "limit", 50);
+  async list(query: ListQuery): Promise<TicketSummary[]> {
+    // One extra internal row detects a continuation; public adapters cap pages at 50.
+    integer(query.limit, "limit", 51);
     if (!Number.isSafeInteger(query.afterNumber) || query.afterNumber < 0) throw new TaskiError("INVALID_INPUT", "Invalid position");
     const filters = Object.fromEntries(Object.entries(query).filter(([key]) => !["limit", "afterNumber"].includes(key)));
     this.changes(filters);

@@ -61,8 +61,8 @@ export class TeamAccess {
     return runtime.hash(`session:${token}`);
   }
   async sessionActor(request: Request): Promise<Actor> {
-    const codeFingerprint = await runtime.hash(this.code());
     const hash = await this.sessionHash(request);
+    const codeFingerprint = await runtime.hash(this.code());
     const row = await this.env.DB.prepare("SELECT member_id,code_fingerprint,expires_at FROM team_sessions WHERE token_hash=?")
       .bind(hash).first<{ member_id: string; code_fingerprint: string; expires_at: number }>();
     if (!row || row.expires_at <= this.now() || row.code_fingerprint !== codeFingerprint) throw new TaskiError("AUTH_REQUIRED");

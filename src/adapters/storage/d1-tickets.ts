@@ -1,5 +1,5 @@
 import { TaskiError } from "../../domain/ticket.ts";
-import type { Activity, Actor, Comment, Receipt, Ticket } from "../../domain/ticket.ts";
+import type { Activity, Actor, Comment, Receipt, Ticket, TicketSummary } from "../../domain/ticket.ts";
 import type { ListQuery, Mutation, ProjectContext, TicketRepository } from "../../application/tickets.ts";
 
 type Row = Record<string, unknown>;
@@ -39,15 +39,17 @@ export class D1TicketRepository implements TicketRepository {
     return row ? ticket(row) : null;
   }
 
-  async list(query: ListQuery): Promise<Ticket[]> {
+  async list(query: ListQuery): Promise<TicketSummary[]> {
     const where = ["number > ?"];
     const values: (string | number | null)[] = [query.afterNumber];
     for (const [key, column] of [["status", "status"], ["assigneeId", "assignee_id"], ["areaId", "area_id"], ["type", "type"]] as const) {
       if (query[key] !== undefined) { where.push(`${column} IS ?`); values.push(query[key]!); }
     }
-    const { results } = await this.db.prepare(`SELECT * FROM tickets WHERE ${where.join(" AND ")} ORDER BY number LIMIT ?`)
+    const { results } = await this.db.prepare(`SELECT number,key,title,status,assignee_id,area_id,type,highlighted,pr_url,version FROM tickets WHERE ${where.join(" AND ")} ORDER BY number LIMIT ?`)
       .bind(...values, query.limit).all<Row>();
-    return results.map(ticket);
+    return results.map((row) => ({ number: row.number as number, key: row.key as string, title: row.title as string,
+      status: row.status as Ticket["status"], assigneeId: row.assignee_id as string | null, areaId: row.area_id as string,
+      type: row.type as Ticket["type"], highlighted: Number(row.highlighted) === 1, prUrl: row.pr_url as string | null, version: row.version as number }));
   }
 
   async replay(actorId: string, operation: string, key: string, fingerprint: string): Promise<Receipt | null> {
@@ -105,9 +107,9 @@ export class D1TicketRepository implements TicketRepository {
       createdAt: row.created_at as string }));
   }
 
-  async activity(after: number, limit: number): Promise<Activity[]> {
-    const { results } = await this.db.prepare(`SELECT a.*,t.key FROM activity a JOIN tickets t ON t.id=a.ticket_id WHERE a.seq>? ORDER BY a.seq LIMIT ?`)
-      .bind(after, limit).all<Row>();
+  async activity(after: number, limit: number, ticketId?: string): Promise<Activity[]> {
+    const { results } = await this.db.prepare(`SELECT a.*,t.key FROM activity a JOIN tickets t ON t.id=a.ticket_id WHERE a.seq>? ${ticketId ? "AND a.ticket_id=?" : ""} ORDER BY a.seq LIMIT ?`)
+      .bind(after, ...(ticketId ? [ticketId] : []), limit).all<Row>();
     return results.map((row) => ({ seq: row.seq as number, ticketId: row.ticket_id as string,
       ticketKey: row.key as string, ticketVersion: row.ticket_version as number,
       actor: JSON.parse(row.actor as string) as Actor, changes: JSON.parse(row.changes as string) as Record<string, unknown>,

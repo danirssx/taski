@@ -40,6 +40,7 @@ export interface Ticket {
   updatedAt: string;
 }
 export type TicketDraft = Omit<Ticket, "number" | "key" | "url">;
+export type TicketSummary = Pick<Ticket, "number" | "key" | "title" | "status" | "assigneeId" | "highlighted" | "version" | "areaId" | "type" | "prUrl">;
 export type TicketChanges = Partial<Pick<Ticket, "title" | "description" | "status" | "assigneeId" | "areaId" | "type" | "highlighted" | "prUrl">>;
 export interface Receipt { key: string; url: string; version: number; changed: string[]; commentId?: string }
 export interface Comment { id: string; ticketId: string; ticketVersion: number; body: string; actor: Actor; createdAt: string }
