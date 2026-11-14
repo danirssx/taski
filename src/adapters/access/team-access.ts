@@ -4,7 +4,11 @@ import type { InstallationConfig } from "../../config/types.ts";
 import { runtime } from "../worker/runtime.ts";
 import { jsonBody, sameOrigin } from "../http/body.ts";
 
-export interface AccessEnvironment { DB: D1Database; TASKI_TEAM_ACCESS_CODE?: string }
+export interface AccessEnvironment {
+  DB: D1Database;
+  TASKI_TEAM_ACCESS_CODE?: string;
+  TASKI_AGENT_COMPLETION_GRANTS?: string;
+}
 const cookieName = "taski_session";
 const ttl = 7 * 24 * 60 * 60 * 1000;
 
@@ -63,6 +67,33 @@ export class TeamAccess {
       .bind(hash).first<{ member_id: string; code_fingerprint: string; expires_at: number }>();
     if (!row || row.expires_at <= this.now() || row.code_fingerprint !== codeFingerprint) throw new TaskiError("AUTH_REQUIRED");
     return this.actor(row.member_id, "web", "person", "taski-web");
+  }
+  async authenticate(request: Request, channel: "http" | "mcp"): Promise<Actor> {
+    const header = request.headers.get("authorization");
+    if (header !== null) {
+      if (!header.startsWith("Bearer ")) throw new TaskiError("AUTH_REQUIRED");
+      await this.verifyCode(request, header.slice(7));
+      const actor = this.actor(text(request.headers.get("x-taski-member"), "X-Taski-Member", 48), channel, "agent",
+        request.headers.get("x-taski-client") ?? "taski-agent");
+      if (this.env.TASKI_AGENT_COMPLETION_GRANTS) {
+        try {
+          const grants = record(JSON.parse(this.env.TASKI_AGENT_COMPLETION_GRANTS), ["reference", "members"]);
+          const reference = text(grants.reference, "reference", 128);
+          const members = record(grants.members, this.config.members.map((member) => member.id));
+          for (const value of Object.values(members)) {
+            if (!Array.isArray(value) || value.length > 50 || !value.every((key) => typeof key === "string"
+                && new RegExp(`^${this.config.project.prefix}-[0-9]{3,}$`).test(key))) throw new Error("Invalid grant");
+          }
+          const keys = members[actor.memberId];
+          if (Array.isArray(keys) && keys.length) { actor.completionFor = keys as string[]; actor.authorizationRef = reference; }
+        } catch { throw new TaskiError("CONFIGURATION_REQUIRED", "Invalid server completion grants"); }
+      }
+      return actor;
+    }
+    if (channel === "mcp") throw new TaskiError("AUTH_REQUIRED");
+    const actor = await this.sessionActor(request);
+    if (!["GET", "HEAD"].includes(request.method)) sameOrigin(request);
+    return actor;
   }
   private async createSession(request: Request, memberId: string, previousHash?: string): Promise<Response> {
     const actor = this.actor(memberId, "web", "person", "taski-web");
