@@ -9,6 +9,7 @@ Estado: B0 completado y base TypeScript/Worker local de B1. Aún no hay gestión
 - [Configuración, presets e identidad estable](configuration.md)
 - [Modelo persistente de tickets e identificadores](data-model.md)
 - [Reglas y casos de uso de tickets](ticket-rules.md)
+- [Auditoría y atomicidad D1](audit.md)
 - [Componentes visuales, temas y vista de ejemplo](ui.md)
 - [Arrancar Worker y D1 locales](getting-started.md)
 - [Solución de problemas de arranque](troubleshooting.md)
