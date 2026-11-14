@@ -1,3 +1,3 @@
 # Cliente
 
-En B5 se añadirá aquí el cliente TypeScript del contrato HTTP. No contiene acceso a D1 ni depende de React. La web y otros consumidores usarán la API; aún no existe un cliente funcional.
+Cliente HTTP TypeScript sin React, DOM o D1. Exporta métodos y tipos públicos; el transporte fetch es inyectable. Ver [guía y ejemplos](../../docs/client.md). No reintenta escrituras ni modifica versiones por su cuenta.

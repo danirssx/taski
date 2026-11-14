@@ -16,7 +16,7 @@
     "db:check": "wrangler d1 execute DB --local --command \"SELECT bootstrap_version FROM taski_bootstrap WHERE id = 1\"",
     "test": "node --test --test-concurrency=2 tests/*.test.mjs",
     "onboarding:check": "node scripts/verify-onboarding.mjs",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.core.json && tsc --noEmit -p tsconfig.web.json",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.core.json && tsc --noEmit -p tsconfig.web.json && tsc --noEmit -p tsconfig.client.json",
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "check": "npm run typecheck && npm run check:boundaries && npm run api:check && npm test && npm run build",
     "docs:check": "python3 scripts/check_docs.py && python3 scripts/check_linear_baseline.py",

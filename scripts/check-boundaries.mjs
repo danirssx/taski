@@ -8,9 +8,10 @@ const root = fileURLToPath(new URL("../src/", import.meta.url));
 const allowed = {
   domain: ["domain"],
   application: ["domain", "application"],
-  adapters: ["domain", "application", "adapters", "config"],
+  adapters: ["domain", "application", "adapters", "config", "contracts"],
+  contracts: ["contracts"],
   config: ["config"],
-  client: ["client"],
+  client: ["client", "contracts"],
   web: ["web", "client", "config"],
 };
 
@@ -42,7 +43,7 @@ async function check(directory) {
           if (from === "web" && to === "config") {
             assert(path.relative(root, filename).startsWith(`web${path.sep}preview${path.sep}`), `Only the preview composition root may import configuration: ${filename}`);
           }
-        } else if (["domain", "application", "config"].includes(from)) {
+        } else if (["domain", "application", "config", "contracts"].includes(from)) {
           assert.fail(`Core must not depend on platform or packages: ${filename} -> ${target}`);
         } else if (["client", "web"].includes(from)) {
           assert(!/^(cloudflare:|node:|@cloudflare\/|wrangler$)/.test(target), `Platform dependency in ${from}: ${target}`);
