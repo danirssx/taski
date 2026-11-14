@@ -13,6 +13,7 @@ Estado: B0 completado y base TypeScript/Worker local de B1. Aún no hay gestión
 - [Concurrencia y reintentos idempotentes](retries.md)
 - [Código de equipo y sesiones](access.md)
 - [API HTTP versionada y contrato OpenAPI](api.md)
+- [Cliente TypeScript y ejemplos independientes](client.md)
 - [Componentes visuales, temas y vista de ejemplo](ui.md)
 - [Arrancar Worker y D1 locales](getting-started.md)
 - [Solución de problemas de arranque](troubleshooting.md)

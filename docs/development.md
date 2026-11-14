@@ -4,17 +4,18 @@ B1 incorpora un único proyecto TypeScript con npm y lockfile. No hay monorepo n
 
 | Carpeta | Responsabilidad | Dependencias permitidas |
 | --- | --- | --- |
-| `src/domain` | Reglas y tipos del producto, en B3 | Dominio. |
+| `src/domain` | Reglas y tipos del producto | Dominio. |
 | `src/application` | Casos de uso y puertos | Dominio y aplicación, sin plataformas. |
 | `src/config` | Presets y validación de instalación | Configuración, sin importar núcleo o adaptadores. |
 | `src/adapters` | HTTP, Worker, almacenamiento y MCP | Núcleo, configuración y adaptadores. |
-| `src/client` | Cliente HTTP independiente, en B5 | Cliente y APIs web estándar, sin React/Cloudflare. |
+| `src/client` | Cliente HTTP independiente | Cliente y APIs web estándar, sin React/Cloudflare. |
+| `src/contracts` | DTOs públicos de la API | Sin plataformas ni dependencias externas. |
 | `src/web` | Componentes/temas B2, integración de app en B7 | Web y cliente; solo el presentador preview puede importar presets. |
 | `experiments/b0` | Spike Python independiente | No se importa desde `src`. |
 
 Las carpetas aún sin implementación tienen un README de alcance. No confundirlas con capacidades disponibles. El tipo de salud vive en aplicación; la traducción a HTTP vive en el adaptador.
 
-El Worker importa la [configuración](configuration.md) en su frontera de composición; el núcleo no importa presets. La validación de configuración no se mezcla con el almacenamiento ni presenta todavía una API de proyecto.
+El Worker importa la [configuración](configuration.md) en su frontera de composición; el núcleo no importa presets. La validación de configuración no se mezcla con el almacenamiento; la API de proyecto expone su versión y permite omitir la configuración sin cambios.
 
 La [vista de componentes](ui.md) arranca por separado con `npm run ui`. `build:web` produce `dist/web`; `build:worker` produce `dist/worker`. El typecheck web usa tipos DOM/React en su propio tsconfig, separados del núcleo y del Worker. El build local de ambos sigue sin desplegar.
 
@@ -28,7 +29,7 @@ npm run db:migrate
 npm run dev
 ```
 
-Wrangler muestra el servidor local en `http://127.0.0.1:8787`. `GET /health` verifica una lectura real del bootstrap D1: HTTP 200 si está preparado y 503 en caso contrario. Consulta el [arranque local](getting-started.md) para respuesta esperada, persistencia y configuración de ejemplo. No hay tareas, acceso de equipo, UI o MCP todavía. Detener con Ctrl+C.
+Wrangler muestra el servidor local en `http://127.0.0.1:8787`. `GET /health` verifica una lectura real del bootstrap D1: HTTP 200 si está preparado y 503 en caso contrario. Consulta el [arranque local](getting-started.md) para respuesta esperada, persistencia y configuración de ejemplo. La API de tickets y el acceso de equipo se documentan en [API HTTP](api.md), [acceso](access.md) y [cliente TypeScript](client.md). La UI conectada y el MCP siguen pendientes. Detener con Ctrl+C.
 
 ## Comprobaciones
 

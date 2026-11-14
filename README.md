@@ -2,7 +2,7 @@
 
 Un gestor de tareas e ideas para equipos pequeños, con API y MCP como interfaces principales. Diseñado para que personas, Claude Code y Codex trabajen sobre el mismo contexto.
 
-**Estado: API de tickets persistentes y auditados sobre Worker/D1 local, con sesiones de equipo y acceso para agentes.** Incluye comentarios atómicos, versiones, reintentos, configuración versionada y actividad incremental. Consulta la [API HTTP](docs/api.md). Todavía no hay UI conectada o MCP; el despliegue de producción se prepara en B11.
+**Estado: API de tickets persistentes y auditados sobre Worker/D1 local, con sesiones de equipo y acceso para agentes.** Incluye comentarios atómicos, versiones, reintentos, configuración versionada y actividad incremental. Consulta la [API HTTP](docs/api.md) y el [cliente TypeScript](docs/client.md). Todavía no hay UI conectada o MCP; el despliegue de producción se prepara en B11.
 
 B2 añade [configuración validada](docs/configuration.md) y una [base visual reutilizable](docs/ui.md). Para revisar sus componentes con datos ficticios, ejecuta `npm run ui` y abre `http://127.0.0.1:5173`. No es todavía la web conectada a tickets.
 
