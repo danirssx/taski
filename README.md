@@ -2,7 +2,7 @@
 
 Un gestor de tareas e ideas para equipos pequeños, con API y MCP como interfaces principales. Diseñado para que personas, Claude Code y Codex trabajen sobre el mismo contexto.
 
-**Estado: núcleo de tickets persistentes y auditados sobre Worker/D1 local.** B3 incluye reglas comunes, comentarios atómicos, versiones y reintentos; todavía no se exponen escrituras de tickets por API, UI conectada, acceso de equipo o MCP. El despliegue de producción se prepara en B11.
+**Estado: núcleo de tickets persistentes y auditados sobre Worker/D1 local, con sesiones de equipo.** B3 incluye reglas comunes, comentarios atómicos, versiones y reintentos. B4 incorpora código compartido y selección de persona en servidor; todavía no hay UI de acceso, API de tickets o MCP. El despliegue de producción se prepara en B11.
 
 B2 añade [configuración validada](docs/configuration.md) y una [base visual reutilizable](docs/ui.md). Para revisar sus componentes con datos ficticios, ejecuta `npm run ui` y abre `http://127.0.0.1:5173`. No es todavía la web conectada a tickets.
 
@@ -46,6 +46,8 @@ npm run dev
 ```
 
 Abre `http://127.0.0.1:8787/health`: debe responder HTTP 200 y `checks.database: ok`. Sigue la [guía de arranque](docs/getting-started.md) para respuesta completa, persistencia y verificaciones. No se necesita una cuenta Cloudflare.
+
+Para probar el [acceso de equipo](docs/access.md), aplica las migraciones y crea `.dev.vars` a partir de `.dev.vars.example`, con tu código local. La salud y los componentes siguen funcionando sin código; las sesiones no usan ningún secreto por defecto.
 
 El [spike experimental de B0](experiments/b0/README.md) sí puede ejecutarse con fixtures ficticios para comprobar el contrato y sus presupuestos proxy. No requiere credenciales; no es un servidor MCP ni demuestra todavía ventaja frente a Linear.
 
