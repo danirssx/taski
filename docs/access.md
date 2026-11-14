@@ -23,3 +23,11 @@ La cookie es HttpOnly, SameSite=Strict, Path=/ y Secure sobre HTTPS; en HTTP de 
 Las escrituras de sesión exigen JSON y rechazan Origin distinto al del Worker. Hay límite simple de diez códigos fallidos por origen de red en una ventana de un minuto, con HTTP 429/Retry-After. Se almacena un bucket hash, no el código ni IP en texto. No pretende reemplazar identidad individual o un sistema avanzado de permisos.
 
 El backend no registra el código en respuestas, actividad o errores. El bundle web de componentes no importa el adaptador de acceso. Los tickets/API/MCP se protegerán desde esta misma frontera en los próximos issues.
+
+## Agentes HTTP y MCP
+
+La frontera común `TeamAccess.authenticate` acepta `Authorization: Bearer <código>` y `X-Taski-Member: <ID>`, más X-Taski-Client opcional (máximo 80 caracteres). Construye actor agent con canal http o mcp; una cookie de web construye person/web. El canal no otorga permisos y el actor nunca se toma del cuerpo del ticket. MCP exige cabeceras, sin convertir una cookie de persona en identidad de agente. Esos adaptadores se exponen en B5/B6.
+
+Cambiar el código invalida tanto sesiones antiguas como credenciales de agentes. No se coloca el código en URLs o argumentos de herramientas. Cliente y responsable del ticket siguen siendo datos separados del actor.
+
+Si el mantenedor delega cerrar tickets concretos, puede configurar TASKI_AGENT_COMPLETION_GRANTS solo en servidor, con JSON como `{"reference":"encargo-001","members":{"alex":["DEMO-001"]}}`. IDs y códigos deben existir en la configuración de proyecto; no se aceptan comodines ni grants por cabecera/cuerpo. El núcleo comprueba la lista para `done` y la auditoría conserva la referencia de autorización, sin cambiar agentsCanComplete global. Esta opción no verifica identidad individual: cualquiera con el código compartido puede elegir una persona, tal como define el alcance inicial.
